@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Models>
+	<Model name="ACCM" type="coupled" description="a coupled system to simulate how the air conditioner refigerate">
+		<Inputs>
+			<Port name="InT" type="int" description="user's order to set up the temperature"/>
+			<Port name="InB" type="int" description="user's order to set up the blowrate"/>
+			<Port name="InM" type="int" description="get the temperature of the room from the thermometer"/>
+		</Inputs>
+		<Outputs>
+			<Port name="OutR" type="int" description="the order from Processor to the refrigerater"/>
+			<Port name="OutF" type="int" description="the order from Processor to the fan"/>
+		</Outputs>
+		<Files>
+			<File name="ACCM.ma" type="ma" location="/"/>
+			<File name="ACCM.ev" type="ev" location="/"/>
+			<File name="ACCM.log" type="log" location="/"/>
+			<File name="ACCM.bat" type="bat" location="/"/>
+		</Files>
+	</Model>
+	<Model name="Memorizer" type="coupled" description="The Memorizer of Air Conditioner to store the user's orders">
+		<Inputs>
+			<Port name="InT" type="int" description="user's order to set up the temperature"/>
+			<Port name="InB" type="int" description="user's order to set up the blowrate"/>
+		</Inputs>
+		<Outputs>
+			<Port name="OutT" type="int" description="Output the order of temperature to Processor"/>
+			<Port name="OutB" type="int" description="Output the order of blow rate to Processor"/>
+		</Outputs>
+		<Files>
+			<File name="Memorizer.ma" type="ma" location="/"/>
+			<File name="Memorizer.ev" type="ev" location="/"/>
+			<File name="Memorizer.log" type="log" location="/"/>
+			<File name="Memorizer.bat" type="bat" location="/"/>
+		</Files>
+	</Model>
+	<Model name="Processor" type="coupled" description="Receiving orders and temperature of the room and output the orders to refrigerater and fan">
+		<Inputs>
+			<Port name="InT" type="int" description="user's order to set up the temperature stored by Memorizer"/>
+			<Port name="InB" type="int" description="user's order to set up the blowrate stored by Memorizer"/>
+			<Port name="InM" type="int" description="get the temperature of the room from the thermometer"/>		
+		</Inputs>
+		<Outputs>
+			<Port name="OutR" type="int" description="the order from Processor to the refrigerater"/>
+			<Port name="OutF" type="int" description="the order from Processor to the fan"/>
+		</Outputs>
+		<Files>
+			<File name="Processor.ma" type="ma" location="/"/>
+			<File name="Processor.ev" type="ev" location="/"/>
+			<File name="Processor.log" type="log" location="/"/>
+			<File name="Processor.bat" type="bat" location="/"/>
+		</Files>
+	</Model>		
+	<Model name="TM" type="atomic" description="the atomic model to store the order of temperature">
+		<Inputs>
+			<Port name="In" type="int" description="user's order to set up the temperature"/>
+		</Inputs>
+		<Outputs>
+			<Port name="Out" type="int" description="Output the order of temperature to Processor"/>
+		</Outputs>
+		<Files>
+			<File name="TM.ma" type="ma" location="/"/>
+			<File name="TM.ev" type="ev" location="/"/>
+			<File name="TM.log" type="log" location="/"/>
+			<File name="TM.bat" type="bat" location="/"/>
+			<File name="TM.cpp" type="cpp" location="/"/>
+			<File name="TM.h" type="h" location="/"/>
+		</Files>
+	</Model>	
+	<Model name="BM" type="atomic" description="the atomic model to store the order of blow">
+		<Inputs>
+			<Port name="In" type="int" description="user's order to set up the blow"/>
+		</Inputs>
+		<Outputs>
+			<Port name="Out" type="int" description="Output the order of blow to Processor"/>
+		</Outputs>
+		<Files>
+			<File name="BM.ma" type="ma" location="/"/>
+			<File name="BM.ev" type="ev" location="/"/>
+			<File name="BM.log" type="log" location="/"/>
+			<File name="BM.bat" type="bat" location="/"/>
+			<File name="BM.cpp" type="cpp" location="/"/>
+			<File name="BM.h" type="h" location="/"/>
+		</Files>
+	</Model>	
+	<Model name="TP" type="atomic" description="the atomic model to process the order to refrigerater">
+		<Inputs>
+			<Port name="InT" type="int" description="user's order to set up the temperature"/>
+			<Port name="InM" type="int" description="the temperature of the room"/>
+			<Port name="Blow" type="int" description="receiving the order from BP"/>
+		</Inputs>
+		<Outputs>
+			<Port name="OutR" type="int" description="Output the order to refrigerater"/>
+			<Port name="Temp" type="int" description="Output the order to BP"/>
+		</Outputs>
+		<Files>
+			<File name="TP.ma" type="ma" location="/"/>
+			<File name="TP.ev" type="ev" location="/"/>
+			<File name="TP.log" type="log" location="/"/>
+			<File name="TP.bat" type="bat" location="/"/>
+			<File name="TP.cpp" type="cpp" location="/"/>
+			<File name="TP.h" type="h" location="/"/>
+		</Files>
+	</Model>
+	<Model name="BP" type="atomic" description="the atomic model to process the order to fan">
+		<Inputs>
+			<Port name="InB" type="int" description="user's order to set up the blow rate"/>
+			<Port name="InM" type="int" description="the temperature of the room"/>
+			<Port name="Temp" type="int" description="receiving the order from TP"/>
+		</Inputs>
+		<Outputs>
+			<Port name="OutF" type="int" description="Output the order to fan"/>
+			<Port name="Blow" type="int" description="Output the order to TP"/>
+		</Outputs>
+		<Files>
+			<File name="BP.ma" type="ma" location="/"/>
+			<File name="BP.ev" type="ev" location="/"/>
+			<File name="BP.log" type="log" location="/"/>
+			<File name="BP.bat" type="bat" location="/"/>
+			<File name="BP.cpp" type="cpp" location="/"/>
+			<File name="BP.h" type="h" location="/"/>
+		</Files>
+	</Model>
+</Models>
